@@ -64,14 +64,14 @@ class RandomQuotes extends Component {
         style={{ backgroundColor: bg }}
       >
         <div
-          className='container grid mx-auto bg-neutral-200 px-4 rounded-md w-64 h-52 lg:h-72 lg:w-96 items-center'
+          className='container grid mx-auto bg-neutral-200 px-4 rounded-md w-72 h-52 lg:h-72 lg:w-96 items-center'
           style={{ color: bg }}
         >
           <h1
             className={
               this.state.buttonClicked
-                ? 'animateTextOut text-base lg:text-2xl text-center font-bold pt-4 lg:pt-10'
-                : 'animateTextIn text-base lg:text-2xl text-center font-bold pt-4 lg:pt-10'
+                ? 'animateTextOut text-base lg:text-2xl text-center font-bold pt-2 lg:pt-10'
+                : 'animateTextIn text-base lg:text-2xl text-center font-bold pt-2 lg:pt-10'
             }
           >
             ❝{this.state.quote}
