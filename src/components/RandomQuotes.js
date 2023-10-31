@@ -1,6 +1,7 @@
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
+import { FormatQuoteOutlined, SkipNextOutlined } from '@mui/icons-material';
 
 class RandomQuotes extends Component {
   constructor(props) {
@@ -21,12 +22,12 @@ class RandomQuotes extends Component {
   // }
 
   randomColor() {
-    const red = Math.floor(Math.random() * 50 + 180); // Adjust the range for the red component
-    const green = Math.floor(Math.random() * 50 + 130); // Adjust the range for the green component
-    const blue = Math.floor(Math.random() * 50 + 90); // Adjust the range for the blue component
+    const red = Math.floor(Math.random() * 50 + 150); // Adjusted the range for the red component (150-200)
+    const green = Math.floor(Math.random() * 50 + 100); // Adjusted the range for the green component (100-150)
+    const blue = Math.floor(Math.random() * 50 + 50); // Adjusted the range for the blue component (50-100)
 
-    const calmColor = `rgb(${red}, ${green}, ${blue})`;
-    this.setState({ backgroundColor: calmColor });
+    const boldColor = `rgb(${red}, ${green}, ${blue})`;
+    this.setState({ backgroundColor: boldColor });
   }
 
   randomQuote() {
@@ -60,27 +61,27 @@ class RandomQuotes extends Component {
     const bg = this.state.backgroundColor;
     return (
       <div
-        className='container flex flex-col h-screen justify-center items-center transition ease delay-300 px-2'
+        className='container flex flex-col h-screen justify-center items-center transition ease-in-out delay-500 px-2'
         style={{ backgroundColor: bg }}
       >
         <div
-          className='container grid mx-auto bg-neutral-200 px-4 rounded-md w-72 h-52 lg:h-72 lg:w-96 items-center'
+          className='container grid mx-auto bg-white items-center rounded-md px-4 h-52 lg:h-72 lg:px-10 w-80 lg:w-1/2 xl:w-1/3'
           style={{ color: bg }}
         >
           <h1
             className={
               this.state.buttonClicked
-                ? 'animateTextOut text-base lg:text-2xl text-center font-bold pt-2 lg:pt-10'
-                : 'animateTextIn text-base lg:text-2xl text-center font-bold pt-2 lg:pt-10'
+                ? 'animateTextOut text-base lg:text-2xl text-center font-bold pt-4 lg:pt-10'
+                : 'animateTextIn text-base lg:text-2xl text-center font-bold pt-4 lg:pt-10'
             }
           >
-            ❝{this.state.quote}
+            <FormatQuoteOutlined style={{fontSize: '40px'}}/> {this.state.quote}
           </h1>
           <span
             className={
               this.state.buttonClicked
-                ? 'animateTextOut justify-self-end text-xs lg:text-sm'
-                : 'animateTextIn justify-self-end text-xs lg:text-sm'
+                ? 'animateTextOut justify-self-end text-xs lg:text-sm lg:pr-10'
+                : 'animateTextIn justify-self-end text-xs lg:text-sm lg:pr-10'
             }
           >
             - {this.state.author.split(', type.fit')}
@@ -106,7 +107,7 @@ class RandomQuotes extends Component {
           to='markdown'
           className='transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none text-white text-xs lg:text-sm'
         >
-          View next cool stuff 😃
+          View the next cool stuff <SkipNextOutlined />
         </Link>
       </div>
     );
