@@ -1,7 +1,7 @@
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { Component } from 'react';
-import { FormatQuoteOutlined, SkipNextOutlined } from '@mui/icons-material';
+import { CodeOutlined, FormatQuoteOutlined, SkipNextOutlined } from '@mui/icons-material';
 
 class RandomQuotes extends Component {
   constructor(props) {
@@ -101,7 +101,7 @@ class RandomQuotes extends Component {
           rel='noreferrer'
           className='mt-8 transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none text-white text-xs lg:text-sm'
         >
-          <em>by Rachael</em>
+          <em>by Rachael <CodeOutlined/> </em>
         </a>
         <Link
           to='markdown'
