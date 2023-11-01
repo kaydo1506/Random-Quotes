@@ -1,5 +1,7 @@
 body {
   font-family: monospace;
+  font-size: initial !important; /* Use 'initial' to unset */
+  font-weight: normal !important;
  
 }
 
@@ -16,6 +18,5 @@ body {
 li {
   list-style-type: none;
 }
-
 
 

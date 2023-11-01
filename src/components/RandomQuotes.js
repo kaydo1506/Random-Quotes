@@ -22,9 +22,9 @@ class RandomQuotes extends Component {
   // }
 
   randomColor() {
-    const red = Math.floor(Math.random() * 50 + 150); // Adjusted the range for the red component (150-200)
-    const green = Math.floor(Math.random() * 50 + 100); // Adjusted the range for the green component (100-150)
-    const blue = Math.floor(Math.random() * 50 + 50); // Adjusted the range for the blue component (50-100)
+    const red = Math.floor(Math.random() * 50 + 150); 
+    const green = Math.floor(Math.random() * 50 + 100);
+    const blue = Math.floor(Math.random() * 50 + 50); 
 
     const boldColor = `rgb(${red}, ${green}, ${blue})`;
     this.setState({ backgroundColor: boldColor });
