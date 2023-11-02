@@ -2,6 +2,8 @@ import { useState } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { SkipNextOutlined, SkipPreviousOutlined } from '@mui/icons-material';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import ZoomOutIcon from '@mui/icons-material/ZoomOut';
 
 export default function MarkdownEditor() {
   const defaultMarkdown = `# Welcome to my very basic React Markdown Previewer!
@@ -21,6 +23,16 @@ Or... wait for it... **_both!_**
 \`Also some regular text between backticks\``;
 
   const [markdown, setMarkdown] = useState(defaultMarkdown);
+  const [editorToggle, setEditorToggle] = useState(false)
+  const [previewToggle, setPreviewToggle] = useState(false);
+
+  const editorClass = editorToggle
+    ? 'outline-none bg-inner-color mb-4 border border-black shadow-custom-boxShadow p-2 w-[90vw] h-[100vh]'
+    : 'outline-none bg-inner-color mb-4 border border-black shadow-custom-boxShadow p-2 w-[70vw] md:w-[50vw] h-64';
+
+ const previewClass = previewToggle
+   ? 'font-serif border border-black shadow-custom-boxShadow bg-inner-color p-4 w-[90vw] h-[100vh] mb-8 '
+   : 'font-serif border border-black shadow-custom-boxShadow bg-inner-color p-4 w-[80vw] md:w-[60vw] mb-8 min-h-64';
 
   const handleMarkdownChange = (e) => {
     setMarkdown(e.target.value);
@@ -75,6 +87,15 @@ Or... wait for it... **_both!_**
     return { __html: text };
   };
 
+  const handleEditorToggle = ()=>{
+    setEditorToggle(!editorToggle)
+    setPreviewToggle(false)
+  }
+  const handlePreviewToggle = () => {
+    setPreviewToggle(!previewToggle);
+    setEditorToggle(false);
+  };
+
   return (
     <div className='markdown px-4 py-6 bg-custom-color h-screen fixed inset-0 overflow-y-auto'>
       {/*Navigation*/}
@@ -92,29 +113,41 @@ Or... wait for it... **_both!_**
         </li>
       </ul>
 
-      {/*MARKDOWN*/}
       <div className='flex items-center flex-col pt-6 pb-4 bg-custom-color'>
         {/*Editor*/}
-        <div className=''>
+        <div className={previewToggle && 'hidden'}>
           <h1 className='border border-black border-custom-border shadow-custom-boxShadow bg-header-color pl-2'>
             Editor
+            <button onClick={handleEditorToggle} className='float-right mr-2'>
+              {editorToggle ? (
+                <ZoomOutIcon className='text-white' />
+              ) : (
+                <ZoomInIcon />
+              )}{' '}
+            </button>
           </h1>
           <textarea
             value={markdown}
             onChange={handleMarkdownChange}
-            // placeholder='Write your Markdown here'
-            className='outline-none bg-inner-color mb-4 border border-black shadow-custom-boxShadow  p-2 w-[70vw] md:w-[50vw] h-64'
+            className={editorClass}
           />
         </div>
 
         {/*Preview*/}
-        <div className=''>
+        <div className={editorToggle && 'hidden'}>
           <h1 className='border border-black border-custom-border shadow-custom-boxShadow bg-header-color pl-2'>
             Previewer
+            <button onClick={handlePreviewToggle} className='float-right mr-2'>
+              {previewToggle ? (
+                <ZoomOutIcon className='text-white' />
+              ) : (
+                <ZoomInIcon />
+              )}{' '}
+            </button>
           </h1>
           <div
             dangerouslySetInnerHTML={parseMarkdown(markdown)}
-            className='font-serif border border-black shadow-custom-boxShadow  p-4 w-[80vw] md:w-[60vw] mb-8 min-h-64 bg-inner-color'
+            className={previewClass}
           />
         </div>
       </div>
