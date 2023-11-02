@@ -20,7 +20,6 @@ Or... wait for it... **_both!_**
 
 \`Also some regular text between backticks\``;
 
-
   const [markdown, setMarkdown] = useState(defaultMarkdown);
 
   const handleMarkdownChange = (e) => {
@@ -29,16 +28,19 @@ Or... wait for it... **_both!_**
 
   const parseMarkdown = (text) => {
     // Replace Markdown with HTML elements
-    text = text.replace(/(#{1,6})\s(.*?)(?=\n|$)/g, (match, hashes, content) => {
-      const level = hashes.length; // Determine the heading level
-      let borderStyle = '';
-      if (level === 1) {
-        borderStyle = 'border-b-2 border-black';
-      } else if (level === 2) {
-        borderStyle = 'border-b border-black';
+    text = text.replace(
+      /(#{1,6})\s(.*?)(?=\n|$)/g,
+      (match, hashes, content) => {
+        const level = hashes.length; // Determine the heading level
+        let borderStyle = '';
+        if (level === 1) {
+          borderStyle = 'border-b-2 border-black';
+        } else if (level === 2) {
+          borderStyle = 'border-b border-black';
+        }
+        return `<h${level} class="${borderStyle} mt-4 mb-4">${content}</h${level}>`;
       }
-      return `<h${level} class="${borderStyle} mt-4 mb-4">${content}</h${level}>`;
-    });
+    );
 
     // Bold and italic text
     text = text.replace(
@@ -53,7 +55,10 @@ Or... wait for it... **_both!_**
     );
 
     // Italics (text within single underscores)
-    text = text.replace(/_(.*?)_/g, '<em class="font-normal mt-4 mb-4">$1</em>');
+    text = text.replace(
+      /_(.*?)_/g,
+      '<em class="font-normal mt-4 mb-4">$1</em>'
+    );
 
     // Escape HTML tags within the content enclosed in backticks
     text = text.replace(/`([^`]+)`/g, (match, content) => {
@@ -69,7 +74,6 @@ Or... wait for it... **_both!_**
 
     return { __html: text };
   };
-
 
   return (
     <div className='markdown px-4 py-6 bg-custom-color h-screen fixed inset-0 overflow-y-auto'>
@@ -104,13 +108,13 @@ Or... wait for it... **_both!_**
         </div>
 
         {/*Preview*/}
-        <div>
+        <div className=''>
           <h1 className='border border-black border-custom-border shadow-custom-boxShadow bg-header-color pl-2'>
             Previewer
           </h1>
           <div
             dangerouslySetInnerHTML={parseMarkdown(markdown)}
-            className='font-serif border border-black shadow-custom-boxShadow  p-4 w-[80vw] md:w-[60vw] min-h-64 bg-inner-color'
+            className='font-serif border border-black shadow-custom-boxShadow  p-4 w-[80vw] md:w-[60vw] mb-8 min-h-64 bg-inner-color'
           />
         </div>
       </div>
