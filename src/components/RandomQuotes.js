@@ -61,11 +61,11 @@ class RandomQuotes extends Component {
     const bg = this.state.backgroundColor;
     return (
       <div
-        className='container flex flex-col h-screen justify-center items-center transition ease-in-out delay-500 px-2'
+        className='flex flex-col h-screen justify-center items-center transition ease-in-out delay-500 px-2'
         style={{ backgroundColor: bg }}
       >
         <div
-          className='container grid mx-auto bg-white items-center rounded-md px-4 h-52 lg:h-72 lg:px-10 w-80 lg:w-1/2 xl:w-1/3'
+          className='grid mx-auto bg-white items-center rounded-md px-4 h-52 lg:h-72 lg:px-10 w-80 lg:w-1/2 xl:w-1/3'
           style={{ color: bg }}
         >
           <h1

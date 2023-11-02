@@ -1,8 +1,10 @@
+h1, h2, h3, h4, h5, h6 {
+    font-size: revert;
+    font-weight: revert;
+}
+
 body {
   font-family: monospace;
-  font-size: initial !important; /* Use 'initial' to unset */
-  font-weight: normal !important;
- 
 }
 
 .animateTextOut {
@@ -14,9 +16,6 @@ body {
   transition: 0.9s ease;
 }
 
-
 li {
   list-style-type: none;
 }
-
-

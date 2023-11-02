@@ -3,11 +3,20 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 import { SkipNextOutlined, SkipPreviousOutlined } from '@mui/icons-material';
 
-
-
 export default function MarkdownEditor() {
-  
-  const [markdown, setMarkdown] = useState('# Write your Markdown here');
+  const defaultMarkdown = `
+# Welcome to my React Markdown Previewer!
+
+## This is a sub-heading...
+### And here's some other cool stuff:
+
+Heres some code, \`<div></div>\`, between 2 backticks.
+
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... wait for it... **_both!_**
+  `;
+  const [markdown, setMarkdown] = useState(defaultMarkdown);
 
   const handleMarkdownChange = (e) => {
     setMarkdown(e.target.value);
@@ -19,14 +28,39 @@ export default function MarkdownEditor() {
       /(#{1,6})\s(.*?)(?=\n|$)/g,
       (match, hashes, content) => {
         const level = hashes.length; // Determine the heading level
-        return `<h${level}>${content}</h${level}>`;
+        let borderStyle = '';
+        if (level === 1) {
+          borderStyle = 'border-b-2 border-black';
+        } else if (level === 2) {
+          borderStyle = 'border-b border-black';
+        }
+        return `<h${level} class="${borderStyle} mt-4 mb-4">${content}</h${level}>`;
       }
     );
 
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold (text within double asterisks)
-    text = text.replace(/_(.*?)_/g, '<em>$1</em>'); // Italics (text within single underscores)
-    text = text.replace(/\n/g, '<br>'); // new line
-    
+    // Bold and italic text
+    text = text.replace(
+      /\*\*_(.*?)_\*\*/g,
+      '<strong class="font-bold italic">$1</strong>'
+    );
+
+    text = text.replace(
+      /\*\*(.*?)\*\*/g,
+      '<strong class="font-bold mt-4 mb-4">$1</strong>'
+    ); // Bold (text within double asterisks)
+
+    text = text.replace(
+      /_(.*?)_/g,
+      '<em class="font-normal mt-4 mb-4">$1</em>'
+    ); // Italics (text within single underscores)
+
+    // Escape HTML tags within the content enclosed in backticks
+    text = text.replace(/`([^`]+)`/g, (match, content) => {
+      return `<code style="background-color: white; padding: 3px" class="font-bold mt-4 mb-4">${content
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')}</code>`;
+    });
+
     // Add more conversions for other Markdown elements
 
     return { __html: text };
@@ -50,24 +84,28 @@ export default function MarkdownEditor() {
       </ul>
 
       {/*MARKDOWN*/}
-      <div className='flex items-center flex-col pt-6 pb-4 bg-custom-color'>
+      <div className='flex items-center flex-col pt-6 pb-4 bg-custom-color not-prose'>
         {/*Editor*/}
         <div className=''>
-          <h1 className='font-bold border-b border-black'>Editor</h1>
+          <h1 className='border border-black border-custom-border shadow-custom-boxShadow bg-header-color pl-2'>
+            Editor
+          </h1>
           <textarea
             value={markdown}
             onChange={handleMarkdownChange}
             // placeholder='Write your Markdown here'
-            className='outline-none bg-custom-color mb-4 border border-black shadow-2xl  p-2 w-[70vw] md:w-[50vw] h-64'
+            className='outline-none bg-inner-color mb-4 border border-black shadow-custom-boxShadow  p-2 w-[70vw] md:w-[50vw] h-64'
           />
         </div>
 
         {/*Preview*/}
-        <div >
-          <h1 className='font-bold border-b border-black'>Previewer</h1>
+        <div>
+          <h1 className='border border-black border-custom-border shadow-custom-boxShadow bg-header-color pl-2'>
+            Previewer
+          </h1>
           <div
             dangerouslySetInnerHTML={parseMarkdown(markdown)}
-            className=' border border-black shadow-2xl  p-2 w-[80vw] md:w-[60vw] min-h-64'
+            className=' border border-black shadow-custom-boxShadow  p-4 w-[80vw] md:w-[60vw] min-h-64 bg-inner-color'
           />
         </div>
       </div>
